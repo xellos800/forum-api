@@ -1,0 +1,14 @@
+__pycache__
+__pycache__/
+.env
+.venv_new/
+venv_new/
+venv_new
+.venv/
+env/
+*.py[cod]
+*.pyo
+.env.*
+.vscode/
+.venv.*
+

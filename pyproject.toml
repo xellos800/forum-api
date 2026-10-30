@@ -1,0 +1,5 @@
+[tool.fastapi]
+entrypoint = "main:app"
+description = "fastapi messsage board app"
+version = "0.0.1"
+
