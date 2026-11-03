@@ -6,4 +6,9 @@ jobs:
     steps:
       - name: pull git repo
         uses: actions/checkout@v7
-      - run: echo "🖥️ This command is now being run."
+      - name: install python
+        uses: actions/setup-python@v7
+      - name: upgrade pip
+        run: python -m pip install --upgrade pip
+      - name: install all dependencies
+        run: pip install -r requirements.txt
