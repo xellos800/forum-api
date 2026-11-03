@@ -1,8 +1,10 @@
 name: Build and Deploy Code
 on: [push, pull_request]
 jobs:
-  Job1:
+  build:
     runs-on: ubuntu-latest
+    environment:
+      name: testing
     env:
       DB_HOSTNAME: ${{ secrets.DB_HOSTNAME }}
       DB_PORT: ${{ secrets.DB_PORT }}
@@ -56,3 +58,15 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/forum-api:latest
           cache-from: type=local,src=${{ runner.temp }}/.buildx-cache
           cache-to: type=local,dest=${{ runner.temp }}/.buildx-cache,mode=max,reset=true
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+      - name: deploy to render
+        if: github.ref == 'refs/heads/main'
+        env:
+          deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          curl --fail-with-body --request POST "$deploy_url"
