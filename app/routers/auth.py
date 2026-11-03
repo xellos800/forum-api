@@ -17,9 +17,6 @@ def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Sessio
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail="Wrong username or password.")
-    # if not utils.verify_password(form_data.password, user.password):
-    #     raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-    #                         detail="Wrong userame or password.")
     access_token_expires = timedelta(minutes=oauth2.EXPIRE_MINUTES)
     access_token = oauth2.generate_token(
         data={"sub": user.email}, expires_delta=access_token_expires
