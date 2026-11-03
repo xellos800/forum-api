@@ -56,7 +56,6 @@ def test_user(client):
                  "password": "password123"}
     res = client.post("/users/", json=user_data)
     assert res.status_code == 201
-    print(res.json())
     new_user = res.json()
     new_user["password"] = user_data["password"]
     return new_user
@@ -85,6 +84,17 @@ def authorized_client(client, token):
         **client.headers,
         "Authorization": f"Bearer {token}"
     }
+    return client
+
+
+@pytest.fixture
+def second_authorized_client(client, test_second_user, token):
+    token = generate_token({"sub": test_second_user["email"]})
+    client.headers = {
+        **client.headers,
+        "Authorization": f"Bearer {token}"
+    }
+
     return client
 
 
