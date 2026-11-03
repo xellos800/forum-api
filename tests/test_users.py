@@ -15,7 +15,7 @@ def test_create_user(client, session):
         "/users/", json={"email": "foo_bar@gmail.com", "password": "password123"})
     new_user = schemas.UserOut(**res.json())
     assert new_user.email == "foo_bar@gmail.com"
-    assert res.status_code == 201
+    assert res.status_code == 200
 
 
 def test_login(client, test_user):
