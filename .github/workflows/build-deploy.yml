@@ -4,14 +4,14 @@ jobs:
   Job1:
     runs-on: ubuntu-latest
     env:
-      DB_HOSTNAME: localhost
-      DB_PORT: 5432
-      DB_PASSWORD: hello
-      DB_NAME: fastapi
-      DB_USERNAME: postgres
-      SECRET_KEY: uHJRaukcpIW6AhQHSAROgUnojtaTSGQdiJuZnbPV5ra
-      ALGORITHM: HS256
-      EXPIRE_MINUTES: 60
+      DB_HOSTNAME: ${{ secrets.DB_HOSTNAME }}
+      DB_PORT: ${{ secrets.DB_PORT }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      ALGORITHM: ${{ secrets.ALGORITHM }}
+      EXPIRE_MINUTES: ${{ secrets.EXPIRE_MINUTES }}
     steps:
       - name: pull git repo
         uses: actions/checkout@v7
