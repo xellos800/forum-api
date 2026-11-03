@@ -7,7 +7,7 @@ jobs:
       DB_HOSTNAME: ${{ secrets.DB_HOSTNAME }}
       DB_PORT: ${{ secrets.DB_PORT }}
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_NAME: ${{ secrets.DB_NAME }}_test
       DB_USERNAME: ${{ secrets.DB_USERNAME }}
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
       ALGORITHM: ${{ secrets.ALGORITHM }}
