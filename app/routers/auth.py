@@ -1,5 +1,7 @@
 from .. import utils, oauth2
 from ..schemas import Token
+from ..database import get_db
+from sqlalchemy.orm import Session
 from fastapi import Depends, HTTPException, status, APIRouter
 from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
@@ -9,15 +11,15 @@ router = APIRouter(prefix="/login", tags=["Authentication"])
 
 
 @router.post("/")
-def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> Token:
+def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Session = Depends(get_db)) -> Token:
     user = utils.authenticate_user(
-        form_data.username, form_data.password)
+        form_data.username, form_data.password, db)
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail="Wrong username or password.")
-    if not utils.verify_password(form_data.password, user.password):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail="Wrong userame or password.")
+    # if not utils.verify_password(form_data.password, user.password):
+    #     raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+    #                         detail="Wrong userame or password.")
     access_token_expires = timedelta(minutes=oauth2.EXPIRE_MINUTES)
     access_token = oauth2.generate_token(
         data={"sub": user.email}, expires_delta=access_token_expires

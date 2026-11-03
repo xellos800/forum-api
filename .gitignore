@@ -4,6 +4,8 @@ __pycache__/
 .venv_new/
 venv_new/
 venv_new
+test_calc.py
+calculations.py
 .venv/
 env/
 *.py[cod]

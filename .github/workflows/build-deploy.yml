@@ -1,0 +1,10 @@
+name: Build and Deploy Code
+on: [push, pull_request]
+jobs:
+  Job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: pull git repo
+      - uses: actions/checkout@v7
+      - name: running a new command
+      - run: echo "🖥️ This command is now being run."
