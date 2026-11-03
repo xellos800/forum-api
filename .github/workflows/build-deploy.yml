@@ -40,3 +40,19 @@ jobs:
         run: |
           pip install pytest
           pytest
+      - name: login to docker hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: set up docker buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build and push
+        uses: docker/build-push-action@v7
+        with:
+          context: ./
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/forum-api:latest
+          cache-from: type=local,src=${{ runner.temp }}/.buildx-cache
+          cache-to: type=local,dest=${{ runner.temp }}/.buildx-cache,mode=max,reset=true
