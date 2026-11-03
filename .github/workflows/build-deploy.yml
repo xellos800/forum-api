@@ -2,7 +2,16 @@ name: Build and Deploy Code
 on: [push, pull_request]
 jobs:
   Job1:
-    runs-on: ubuntu-latest
+    env:
+      DB_HOSTNAME: localhost
+      DB_PORT: 5432
+      DB_PASSWORD: hello
+      DB_NAME: fastapi
+      DB_USERNAME: postgres
+      SECRET_KEY: uHJRaukcpIW6AhQHSAROgUnojtaTSGQdiJuZnbPV5ra
+      ALGORITHM: HS256
+      EXPIRE_MINUTES: 60
+          runs-on: ubuntu-latest
     steps:
       - name: pull git repo
         uses: actions/checkout@v7
